@@ -13,7 +13,7 @@ body {
   line-height: .5;
 }
 .quote {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 400;
   line-height: 1.1;
   position: relative;
@@ -36,7 +36,7 @@ body {
   position: absolute;
 }
 .source {
-  font-size: 1.25rem;;
+  font-size: 1.25rem;
   letter-spacing: 0.05em;
   line-height: 1.1;
   text-align: right;
@@ -57,17 +57,32 @@ body {
   font-style: normal;
 }
 
+.tags {
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  float: right;
+  border: 1px solid #fff;
+  background-color: rgba(255,255,255,.25);
+  color: #fff;
+
+}
+
+.tags:before {
+
+}
+
 #loadQuote {
   position: fixed;
   width: 12em;
   display: inline-block;
   left: 50%;
   margin-left: -6em;
-  bottom: 150px;
+  bottom: 80px;
   border-radius: 4px;
   border: 2px solid #fff;
   color: #fff;
-  background-color: #36b55c;
+  background-color: transparent;
   padding: 15px 0;
   transition: .5s ;
 }
