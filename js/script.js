@@ -45,12 +45,13 @@ var quotes = [
 
 var seenQuotes = quotes.slice(0); 
 var backgroundColors = ["#36b55c", "#FFA500", "#1E90FF", "#FF6347", "#BA55D3"];
+var backgroundCounter = 0;
 var timeChecker; 
 
 //Print quote every 30 seconds since last quote displayed
 function timeDisplay () {
 	clearInterval(timeChecker);
-	timeChecker = setInterval(function() {printQuote();}, 30000); 
+	timeChecker = setInterval(function() {printQuote();}, 20000); 
 }
 
 
@@ -66,16 +67,31 @@ function genRandNum (quotes) {
 	return randomNum;
 }
 
-//Gets random quote 
+//Gets a random quote 
 function getRandomQuote (quotes) {
-	var quoteObject = quotes[genRandNum(quotes)];
+	// Check if there are no more new quotes to display
+	if (seenQuotes.length === 0) {
+		seenQuotes = quotes.slice(0); 
+		console.log("All quotes seen! Re-setting...");
+	}
+
+	var quoteObject = seenQuotes[genRandNum(seenQuotes)];
+
+	// Remove quote from possible list
+	var quoteIndex = seenQuotes.indexOf(quoteObject); 
+	seenQuotes.splice(quoteIndex, 1);
+
 	return quoteObject; 
 }
 
-//Change background color of Body 
+//Change background color without repeating same color twice in a row
 function changeBackground () {
-	var randIndex = genRandNum(backgroundColors); 
-	document.body.style.backgroundColor = backgroundColors[randIndex];
+	if (backgroundCounter === 5) {
+		backgroundCounter = 0;
+	}
+
+	document.body.style.backgroundColor = backgroundColors[backgroundCounter];
+	backgroundCounter ++; 
 } 
 
 //Print relevant tags 
@@ -89,14 +105,9 @@ function printTags (tagArray) {
 
 //Prints quote-box html using a random quote 
 function printQuote () {	 
-	//Check if there are no more new quotes to display
-	if (seenQuotes.length === 0) {
-		seenQuotes = quotes.slice(0); 
-		console.log("All quotes seen! Re-setting...");
-	}
 
 	//Construct html message 
-	var quoteObj = getRandomQuote(seenQuotes);
+	var quoteObj = getRandomQuote(quotes);
 	var message = "<p class='quote'>" + quoteObj.quote + 
 	"</p> <p class='source'>" + quoteObj.source; 
 	if (quoteObj.hasOwnProperty("citation")) {
@@ -110,12 +121,6 @@ function printQuote () {
 	console.log(message);
 	print(message);
 	changeBackground();
-
-	// Remove already seen quote from possible list of quotes
-	var quoteIndex = seenQuotes.indexOf(quoteObj); 
-	seenQuotes.splice(quoteIndex, 1); 
-	
-
 }
 
 printQuote();
